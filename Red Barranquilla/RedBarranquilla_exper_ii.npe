@@ -1,0 +1,17 @@
+
+Network Performance
+
+File:     D:\Dropbox\Simulaciones\Adaptativa - Replicator Dynamics\Experimento ii\Modelo experimento ii\RedBarranquilla_exper_ii.inp
+Comment:  8 intersecciones bquilla
+Date:     sábado, 08 de junio de 2013 11:56:40 p. m.
+VISSIM:   5.40-06 [36554]
+
+Simulation time from 0.0 to 3600.0.
+
+ Parameter                                                             ;          Value;
+ Number of Stops, All Vehicle Types                                    ;      16751;
+ Total travel time [h], All Vehicle Types                              ;        332.897;
+ Total Distance Traveled [km], All Vehicle Types                       ;      13579.567;
+ Average speed [km/h], All Vehicle Types                               ;         40.792;
+ Average stopped delay per vehicle [s], All Vehicle Types              ;         18.022;
+ Total stopped delay [h], All Vehicle Types                            ;         47.699;

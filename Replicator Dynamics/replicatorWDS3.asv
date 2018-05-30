@@ -1,0 +1,35 @@
+function [X,H_err,X13,p] = replicatorWDS3(Ath,p0,H_all,H_ref,T,maxV)
+Tspan=Ath; %Segundos
+n = length(T)+1;
+H_err = max(0,(H_all-H_ref)); % Errores siempre positivos
+AP = zeros(1,n);
+for iT=1:length(T)
+    iTf = floor(T(iT)/10);
+    iTc = T(iT)-floor(T(iT)/10)*10;
+    switch H_all(iTf)>H_all(iTc)
+        case true%el caudal va de f a c, por lo tanto solo importa el Ap de c
+            AP(iT) = H_err(iTc);
+        case false%el caudal va de c a f, por lo tanto solo importa el Ap de f
+            AP(iT) = H_err(iTf);
+    end
+end
+AP(n) = min(H_ref(2:end));%Zona de energía (13)(Minimo por que este control es inverso)
+AP = max(0,AP);  
+
+alpha = 1/(max(AP));
+% alpha = 1/60;
+
+ka = 1;
+[t,p] = ode23s('replicatorsWDS_ode',Tspan,p0,[],AP,alpha,ka,n);
+p_ss(:,1)=p(end,:);
+p=p_ss;
+
+p_ss=12*maxV.*p_ss;
+X = zeros(length(H_all));
+for iT=1:length(T)
+    iTf = floor(T(iT)/10);
+    iTc = T(iT)-floor(T(iT)/10)*10;
+    X(iTf,iTc) = min(maxV,max(0,p_ss(iT)))';
+end
+X13 = p_ss(end);
+X = simetria(X,1);
